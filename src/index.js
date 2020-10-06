@@ -1,6 +1,7 @@
 // @flow
+/** @jsx createElement */
 
-import React from 'react';
+import { createElement, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
 export type Point = {
@@ -62,7 +63,7 @@ function getOffset(props: Props) {
   return offset;
 }
 
-export default class Selection extends React.PureComponent<Props, State> { // eslint-disable-line react/prefer-stateless-function
+export default class Selection extends PureComponent<Props, State> { // eslint-disable-line react/prefer-stateless-function
   props: Props;
   state: State;
   selectedChildren: Array<number>;
@@ -201,10 +202,10 @@ export default class Selection extends React.PureComponent<Props, State> { // es
       this.props.onSelectionChange(this.selectedChildren);
     }
 
-    if (this.props.onHighlightChange) {
-      this.highlightedChildren = [];
-      this.props.onHighlightChange(this.highlightedChildren);
-    }
+    // if (this.props.onHighlightChange) {
+    //   this.highlightedChildren = [];
+    //   this.props.onHighlightChange(this.highlightedChildren);
+    // }
     this.selectedChildren = [];
   };
 

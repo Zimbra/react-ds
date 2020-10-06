@@ -1,4 +1,5 @@
 // @flow
+/** @jsx createElement */
 
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -84,15 +85,15 @@ export default class Selection extends React.PureComponent<Props, State> { // es
     this.highlightedChildren = [];
   }
 
+  static getDerivedStateFromProps(nextProps: Props) {
+    return {
+      offset: getOffset(nextProps),
+    };
+  }
+
   componentDidMount() {
     this.reset();
     this.bind();
-  }
-
-  componentWillReceiveProps(nextProps: Props) {
-    this.setState({
-      offset: getOffset(nextProps),
-    });
   }
 
   componentDidUpdate() {
@@ -201,10 +202,10 @@ export default class Selection extends React.PureComponent<Props, State> { // es
       this.props.onSelectionChange(this.selectedChildren);
     }
 
-    if (this.props.onHighlightChange) {
-      this.highlightedChildren = [];
-      this.props.onHighlightChange(this.highlightedChildren);
-    }
+    // if (this.props.onHighlightChange) {
+    //   this.highlightedChildren = [];
+    //   this.props.onHighlightChange(this.highlightedChildren);
+    // }
     this.selectedChildren = [];
   };
 
