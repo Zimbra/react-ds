@@ -32,6 +32,7 @@ type Props = {
   style?: any,
   zoom?: number,
   ignoreTargets?: Array<string>,
+  returnRefs?: Boolean
 };
 
 type State = {
@@ -66,8 +67,8 @@ function getOffset(props: Props) {
 export default class Selection extends PureComponent<Props, State> { // eslint-disable-line react/prefer-stateless-function
   props: Props;
   state: State;
-  selectedChildren: Array<number>;
-  highlightedChildren: Array<number>;
+  selectedChildren: Array<any>;
+  highlightedChildren: Array<any>;
 
   constructor(props: Props) {
     super(props);
@@ -299,7 +300,11 @@ export default class Selection extends PureComponent<Props, State> { // eslint-d
           };
 
           if (this.boxIntersects(selectionBox, tmpBox)) {
-            this.selectedChildren.push($index);
+            if (this.props.returnRefs) {
+              this.selectedChildren.push(ref);
+            } else {
+              this.selectedChildren.push($index);
+            }
           }
         }
       });

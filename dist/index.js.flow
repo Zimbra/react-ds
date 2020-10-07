@@ -1,7 +1,7 @@
 // @flow
 /** @jsx createElement */
 
-import React from 'react';
+import { createElement, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
 export type Point = {
@@ -32,6 +32,7 @@ type Props = {
   style?: any,
   zoom?: number,
   ignoreTargets?: Array<string>,
+  returnRefs?: Boolean
 };
 
 type State = {
@@ -63,11 +64,11 @@ function getOffset(props: Props) {
   return offset;
 }
 
-export default class Selection extends React.PureComponent<Props, State> { // eslint-disable-line react/prefer-stateless-function
+export default class Selection extends PureComponent<Props, State> { // eslint-disable-line react/prefer-stateless-function
   props: Props;
   state: State;
-  selectedChildren: Array<number>;
-  highlightedChildren: Array<number>;
+  selectedChildren: Array<any>;
+  highlightedChildren: Array<any>;
 
   constructor(props: Props) {
     super(props);
@@ -299,7 +300,11 @@ export default class Selection extends React.PureComponent<Props, State> { // es
           };
 
           if (this.boxIntersects(selectionBox, tmpBox)) {
-            this.selectedChildren.push($index);
+            if (this.props.returnRefs) {
+              this.selectedChildren.push(ref);
+            } else {
+              this.selectedChildren.push($index);
+            }
           }
         }
       });
